@@ -1,0 +1,129 @@
+:root {
+  --hover: #8b9d83;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: #141414;
+  font-size: 16px;
+  font-family: "Manrope", sans-serif;
+  color: #fff;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.todo {
+  padding: 80px 0;
+  position: relative;
+}
+
+.todo form input {
+  background: url(assets/img/pen.png) no-repeat scroll 10px 10px;
+}
+
+.todo .form-control {
+  background-color: #fff;
+}
+
+.todo .form-control-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.todo .plus-btn {
+  width: 45px;
+  height: 40px;
+  font-size: 30px;
+  line-height: 30px;
+  transition: 0.3s all ease;
+  border: none;
+  outline: none;
+  border-radius: 100%;
+  background-color: var(--hover);
+  color: #fff;
+}
+
+.todo .plus-btn:hover {
+  background: var(--hover);
+  color: #fff;
+}
+
+.form-control {
+  border-radius: 0;
+  outline: none;
+  border: none;
+}
+
+.form-control:focus {
+  outline: none;
+}
+
+.todo .items {
+  margin-top: 40px;
+}
+
+.todo .items .item-wrapper {
+  margin-bottom: 15px;
+}
+
+.todo .item p {
+  margin: 0;
+}
+
+.todo .item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--hover);
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+.todo .item button {
+  border: none;
+  margin-right: 10px;
+  background: transparent;
+  color: #fff;
+  transition: 0.3s all ease;
+}
+
+.todo .item button:hover {
+  color: #000;
+}
+
+.todo .item {
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+.items .item__input {
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
+}
+
+.todo .form-control {
+  outline: none;
+  border-radius: 5px;
+  padding: 10px 10px 10px 45px;
+  margin-right: 10px;
+}
+
+.item > div {
+  width: 100%;
+}
+
+.item .item__buttons {
+  text-align: right;
+}
+
+.item .item__date {
+  text-align: center;
+  font-size: 13px;
+}

@@ -11,10 +11,11 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: "Todo List",
+      template: "./src/index.html",
     }),
   ],
   output: {
-    filename: "main.js",
+    filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
@@ -31,6 +32,10 @@ module.exports = {
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
         type: "asset/resource",
+      },
+      {
+        test: /\.html$/i,
+        loader: "html-loader",
       },
     ],
   },
