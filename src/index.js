@@ -1,4 +1,4 @@
-// importing necessary scripts
+// styles
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
