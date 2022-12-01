@@ -1,5 +1,9 @@
-"use strict";
+// importing necessary scripts
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./style.css";
 
+("use strict");
 // caching DOM
 let addBtn = document.querySelector("#add");
 let entry = document.querySelector("#item");
