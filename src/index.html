@@ -9,7 +9,6 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <section class="todo">
@@ -46,6 +45,40 @@
         </div>
       </div>
     </section>
-    <script src="index.js"></script>
+
+    <!-- modal -->
+    <div class="custom-modal d-none">
+      <div class="modal-title">
+        <h3>Edit Task</h3>
+        <button class="closeModal" type="button">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Task:
+          <input
+            type="text"
+            class="task__title"
+            placeholder="Enter your task title"
+          />
+        </p>
+        <p>
+          Description:
+          <textarea
+            class="task__description"
+            placeholder="Enter your description for this task..."
+          ></textarea>
+        </p>
+        <p>Due Date: <input type="date" class="task__date" /></p>
+
+        <div class="badge-wrapper">
+          <span class="badge text-uppercase task__priority"></span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary save_changes">
+          Save changes
+        </button>
+      </div>
+    </div>
   </body>
 </html>

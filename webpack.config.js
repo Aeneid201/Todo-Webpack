@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   mode: "development",
@@ -13,10 +14,15 @@ module.exports = {
       title: "Todo List",
       template: "./src/index.html",
     }),
+    new CopyPlugin({
+      patterns: [{ from: "./src/assets/img", to: "images" }],
+    }),
   ],
   output: {
-    filename: "[name].js",
+    filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
+    assetModuleFilename: "images/[hash][ext][query]",
+    publicPath: "/",
     clean: true,
   },
   module: {
@@ -26,8 +32,13 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        test: /\.(png|svg|jp?g|gif)$/i,
         type: "asset/resource",
+        // loader: "file-loader",
+        // options: {
+        //   name: "[name].[hash].[ext]",
+        //   outputPath: "images",
+        // },
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,

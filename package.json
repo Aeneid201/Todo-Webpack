@@ -9,10 +9,6 @@
     "start": "webpack serve --open",
     "build": "webpack"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Aeneid201/Todo-Webpack.git"
-  },
   "author": "Oumaima Lairani",
   "license": "ISC",
   "bugs": {
@@ -20,6 +16,7 @@
   },
   "homepage": "https://github.com/Aeneid201/Todo-Webpack#readme",
   "devDependencies": {
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.2",
     "font-awesome": "^4.7.0",
     "html-loader": "^4.2.0",
@@ -31,6 +28,8 @@
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
-    "date-fns": "^2.29.3"
+    "date-fns": "^2.29.3",
+    "jquery": "^3.6.1",
+    "popper.js": "^1.16.1"
   }
 }
