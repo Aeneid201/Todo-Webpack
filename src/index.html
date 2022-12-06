@@ -71,7 +71,13 @@
         <p>Due Date: <input type="date" class="task__date" /></p>
 
         <div class="badge-wrapper">
-          <span class="badge text-uppercase task__priority"></span>
+          <div class="priority_checkbox badge">
+            <input type="checkbox" class="priority_input" id="priority_input" />
+            <label
+              for="priority_input"
+              class="text-uppercase task__priority"
+            ></label>
+          </div>
         </div>
       </div>
       <div class="modal-footer">

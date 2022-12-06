@@ -161,6 +161,7 @@ body {
   transform: translate(-50%, -50%);
   left: 50%;
   transition: 0.4s all ease;
+  top: 50%;
 }
 
 .custom-modal .modal-title {
@@ -204,4 +205,13 @@ body {
 .item > div.item__priority {
   width: auto;
   text-transform: uppercase;
+}
+
+.blur {
+  filter: blur(1px);
+  opacity: 0.2;
+}
+
+.badge-wrapper input[type="checkbox"] {
+  vertical-align: middle;
 }

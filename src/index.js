@@ -15,24 +15,25 @@ import "./style.css";
 let addBtn = document.querySelector("#add");
 let entry = document.querySelector("#item");
 let itemsList = document.querySelector(".items");
+const todo_section = document.querySelector(".todo");
 const customModal = document.querySelector(".custom-modal");
 
 // todo array
 let todos = [
-  {
-    id: 0,
-    title: "wash dishes",
-    description: "need to wash dishes tonight",
-    dueDate: "2022-11-29",
-    priority: "medium",
-  },
-  {
-    id: 1,
-    title: "buy hamster food",
-    description: "silver needs seeds",
-    dueDate: "2023-01-01",
-    priority: "high",
-  },
+  // {
+  //   id: 0,
+  //   title: "wash dishes",
+  //   description: "need to wash dishes tonight",
+  //   dueDate: "2022-11-29",
+  //   priority: "medium",
+  // },
+  // {
+  //   id: 1,
+  //   title: "buy hamster food",
+  //   description: "silver needs seeds",
+  //   dueDate: "2023-01-01",
+  //   priority: "high",
+  // },
 ];
 
 // populating local storage
@@ -50,7 +51,7 @@ if (storedItems) {
 // display todo items
 function render() {
   todos.forEach((item, i) => {
-    let html = `<div class="item" data-item="${i}">
+    let html = `<div class="item" data-item="${item.id}">
     <div>
     <p class="item__title">${item.title}</p>
     <input class="item__input d-none" autocomplete="off" value="${item.title}">
@@ -72,13 +73,17 @@ function render() {
   });
 }
 render();
-
+let ID_increment = 0;
 // add item
 addBtn.addEventListener("click", function (e) {
   e.preventDefault();
   if (entry.value) {
+    // TODO: check if item already exists
+
     // create new object then push it to the array
-    createItem(entry.value);
+    let new_item = createItem(entry.value);
+    new_item.id = ID_increment;
+    ID_increment++;
     // populateStorage();
   } else {
     alert("Field cannot be empty! Please try again.");
@@ -133,6 +138,7 @@ itemsList.addEventListener("click", function (e) {
     // open item settings
     else if (clickedBtn.classList.contains("settings")) {
       customModal.classList.remove("d-none");
+      todo_section.classList.add("blur");
       populateModal(todos[item__index]);
     }
   }
@@ -140,24 +146,26 @@ itemsList.addEventListener("click", function (e) {
 
 // clear all items
 function clearAll() {
-  itemsList.innerHTML = "";
+  return (itemsList.innerHTML = "");
 }
 
 // clear entry input
 function clearField() {
-  entry.value = "";
+  return (entry.value = "");
 }
 
 // populate modal
-
 let task__title = document.querySelector(".task__title");
+let priority_checkbox = document.querySelector(".priority_checkbox");
 let task__priority = document.querySelector(".task__priority");
+let priority_input = document.querySelector(".priority_input");
 let task__date = document.querySelector(".task__date");
 let task__description = document.querySelector(".task__description");
 function populateModal(item) {
   task__title.value = item.title;
   task__priority.textContent = item.priority;
-  task__priority.classList.add(item.priority);
+  priority_checkbox.classList.add(item.priority);
+  priority_input.checked = true;
   task__date.value = item.dueDate;
   task__description.value = item.description;
   customModal.setAttribute("data-item", item.id);
@@ -197,6 +205,7 @@ closeModal.addEventListener("click", closeCustomModal);
 
 function closeCustomModal() {
   customModal.classList.add("d-none");
+  todo_section.classList.remove("blur");
 }
 
 // create new item
@@ -205,14 +214,13 @@ function createItem(
   title,
   description = "",
   dueDate = today,
-  priority = "low",
-  id = 0
+  priority = "low"
 ) {
   let new_item = new Object();
   new_item.title = title;
   new_item.description = description;
   new_item.dueDate = format(dueDate, "yyyy-MM-dd");
   new_item.priority = priority;
-  new_item.id = id;
   todos.push(new_item);
+  return new_item;
 }
