@@ -16,7 +16,9 @@ import {
   createProject,
   pushTask,
   renderTask,
+  findCurrentIndex,
 } from "./functions.js";
+import { ta } from "date-fns/locale";
 
 // DOM elements
 let addBtn = document.querySelector("#add");
@@ -29,6 +31,12 @@ const item__input = document.querySelector(".item__input");
 
 // First/default project
 let defaultProject = createProject("First Project");
+
+// test task
+let myTask = createTask("test");
+let task2 = createTask("buy groceries");
+pushTask(defaultProject, myTask);
+pushTask(defaultProject, task2);
 
 // Display the tasks
 function render() {
@@ -44,7 +52,7 @@ addBtn.addEventListener("click", function (e) {
 
   // validate input
   if (taskBar.value) {
-    pushTask(defaultProject, taskBar.value);
+    pushTask(defaultProject, createTask(taskBar.value));
     console.log(defaultProject);
     clearField(taskBar);
     clearAll(itemsList);
@@ -56,8 +64,41 @@ addBtn.addEventListener("click", function (e) {
 
 // Edit task
 itemsList.addEventListener("click", function (e) {
+  let clickedBtn = e.target.closest("button");
   let currentItem = e.target.closest(".item");
   let currentItem__title = currentItem.querySelector(".item__title");
+  let currentItem__button = currentItem.querySelectorAll("button");
+  let currentItem__input = currentItem.querySelector(".item__input");
+  let currentItem__index = findCurrentIndex(
+    defaultProject,
+    currentItem__title.innerText
+  );
+
+  if (clickedBtn) {
+    // Delete task
+    if (clickedBtn.classList.contains("delete")) {
+      defaultProject.tasks.splice(currentItem__index, 1);
+      clearAll(itemsList);
+      render();
+    }
+
+    // Edit task
+    if (clickedBtn.classList.contains("edit")) {
+      currentItem__title.classList.add("d-none");
+      currentItem__input.classList.remove("d-none");
+
+      currentItem__input.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          defaultProject.tasks[currentItem__index].title =
+            currentItem__input.value;
+          currentItem__title.classList.remove("d-none");
+          currentItem__input.classList.add("d-none");
+          clearAll(itemsList);
+          render();
+        }
+      });
+    }
+  }
 });
 
 // Populate the modal

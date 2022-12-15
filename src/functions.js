@@ -6,6 +6,7 @@ export {
   createProject,
   pushTask,
   renderTask,
+  findCurrentIndex,
 };
 // Current date
 function getCurrentDate() {
@@ -45,7 +46,7 @@ function createProject(title, tasks = []) {
 
 // Push task
 function pushTask(project, task) {
-  return project["tasks"].push(createTask(task));
+  return project["tasks"].push(task);
 }
 
 // Render task
@@ -71,3 +72,11 @@ function renderTask(list, task) {
   </div>`;
   return list.insertAdjacentHTML("afterbegin", html);
 }
+
+// Find index of task
+function findCurrentIndex(project, title) {
+  let currentIndex = project.tasks.findIndex((task) => task.title == title);
+  return currentIndex;
+}
+
+// Check if edited task title already exists
