@@ -7,6 +7,9 @@ export {
   pushTask,
   renderTask,
   findCurrentIndex,
+  getCurrentProject,
+  pushProject,
+  renderProject,
 };
 // Current date
 function getCurrentDate() {
@@ -39,18 +42,22 @@ function createTask(
   return { title, description, dueDate, priority };
 }
 
-// Create new project
-function createProject(title, tasks = []) {
-  return { title, tasks };
-}
-
 // Push task
 function pushTask(project, task) {
   return project["tasks"].push(task);
 }
 
-// Render task
+// Create new project
+function createProject(title, tasks = []) {
+  return { title, tasks };
+}
 
+// Push project
+function pushProject(arr, project) {
+  return arr.push(project);
+}
+
+// Render task
 function renderTask(list, task) {
   let html = `<div class="item">
     <div>
@@ -70,7 +77,12 @@ function renderTask(list, task) {
       <button class="settings"><img src="/images/settings.png"></button>
     </div>
   </div>`;
-  return list.insertAdjacentHTML("afterbegin", html);
+  return list.insertAdjacentHTML("beforeend", html);
+}
+
+function renderProject(list, project) {
+  let html = `<button class="project__btn">${project.title}</button>`;
+  return list.insertAdjacentHTML("beforeend", html);
 }
 
 // Find index of task
@@ -80,3 +92,14 @@ function findCurrentIndex(project, title) {
 }
 
 // Check if edited task title already exists
+
+// Get current project
+function getCurrentProject(buttons_arr, project) {
+  let current_project__title;
+  buttons_arr.forEach((btn) => {
+    if (btn.classList.contains("active")) {
+      current_project__title = btn.innerText;
+    }
+  });
+  return project;
+}

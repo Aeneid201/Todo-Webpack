@@ -17,8 +17,10 @@ import {
   pushTask,
   renderTask,
   findCurrentIndex,
+  getCurrentProject,
+  pushProject,
+  renderProject,
 } from "./functions.js";
-import { ta } from "date-fns/locale";
 
 // DOM elements
 let addBtn = document.querySelector("#add");
@@ -28,23 +30,42 @@ const todo_section = document.querySelector(".todo");
 const customModal = document.querySelector(".custom-modal");
 const item__title = document.querySelector(".item__title");
 const item__input = document.querySelector(".item__input");
+let projects_list = document.querySelector(".projects__list");
+let projects_list__btns = document.querySelectorAll(".projects__list button");
+let current_project__title = document.querySelector(".current-project__title");
+let addProjectBtn = document.querySelector(".addProject");
+let current_project;
+let projects = [];
 
 // First/default project
-let defaultProject = createProject("First Project");
+let defaultProject = createProject("Default Project");
+pushProject(projects, defaultProject);
+current_project = defaultProject;
+current_project__title.innerText = current_project.title;
+// console.log(getCurrentProject(projects_list__btns));
 
 // test task
 let myTask = createTask("test");
 let task2 = createTask("buy groceries");
-pushTask(defaultProject, myTask);
-pushTask(defaultProject, task2);
+pushTask(current_project, myTask);
+pushTask(current_project, task2);
 
 // Display the tasks
 function render() {
-  defaultProject["tasks"].forEach((item, i) => {
+  current_project["tasks"].forEach((item, i) => {
     renderTask(itemsList, item);
   });
 }
 render();
+
+// Display the projects
+function renderAllProjects() {
+  projects.forEach((project, i) => {
+    renderProject(projects_list, project);
+  });
+}
+
+renderAllProjects();
 
 // Add new task
 addBtn.addEventListener("click", function (e) {
@@ -52,8 +73,8 @@ addBtn.addEventListener("click", function (e) {
 
   // validate input
   if (taskBar.value) {
-    pushTask(defaultProject, createTask(taskBar.value));
-    console.log(defaultProject);
+    pushTask(current_project, createTask(taskBar.value));
+    console.log(current_project);
     clearField(taskBar);
     clearAll(itemsList);
     render();
@@ -70,14 +91,14 @@ itemsList.addEventListener("click", function (e) {
   let currentItem__button = currentItem.querySelectorAll("button");
   let currentItem__input = currentItem.querySelector(".item__input");
   let currentItem__index = findCurrentIndex(
-    defaultProject,
+    current_project,
     currentItem__title.innerText
   );
 
   if (clickedBtn) {
     // Delete task
     if (clickedBtn.classList.contains("delete")) {
-      defaultProject.tasks.splice(currentItem__index, 1);
+      current_project.tasks.splice(currentItem__index, 1);
       clearAll(itemsList);
       render();
     }
@@ -89,7 +110,7 @@ itemsList.addEventListener("click", function (e) {
 
       currentItem__input.addEventListener("keypress", function (e) {
         if (e.key === "Enter") {
-          defaultProject.tasks[currentItem__index].title =
+          current_project.tasks[currentItem__index].title =
             currentItem__input.value;
           currentItem__title.classList.remove("d-none");
           currentItem__input.classList.add("d-none");
@@ -98,6 +119,8 @@ itemsList.addEventListener("click", function (e) {
         }
       });
     }
+
+    // Task Settings
   }
 });
 
@@ -116,3 +139,19 @@ function closeCustomModal() {
   customModal.classList.add("d-none");
   todo_section.classList.remove("blur");
 }
+
+// Add project functionality
+addProjectBtn.addEventListener("click", function () {
+  let projectTitle = prompt("Enter your project title");
+  if (projectTitle) {
+    let newProject = createProject(projectTitle);
+    pushProject(projects, newProject);
+    clearAll(projects_list);
+    renderAllProjects();
+  }
+});
+
+projects_list.addEventListener("click", function (e) {
+  let clickedProject = e.target.closest("button");
+  clickedProject.classList.add("active");
+});
