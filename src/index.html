@@ -89,14 +89,18 @@
         </p>
         <p>Due Date: <input type="date" class="task__date" /></p>
 
-        <div class="badge-wrapper">
-          <div class="priority_checkbox badge">
-            <input type="checkbox" class="priority_input" id="priority_input" />
-            <label
-              for="priority_input"
-              class="text-uppercase task__priority"
-            ></label>
-          </div>
+        <div class="priority_wrapper">
+          <input type="radio" id="low" name="priority_input" value="low" />
+          <label for="low">Low</label><br />
+          <input
+            type="radio"
+            id="medium"
+            name="priority_input"
+            value="medium"
+          />
+          <label for="medium">Medium</label><br />
+          <input type="radio" id="high" name="priority_input" value="high" />
+          <label for="high">High</label>
         </div>
       </div>
       <div class="modal-footer">

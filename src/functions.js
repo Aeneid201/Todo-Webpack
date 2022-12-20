@@ -36,10 +36,10 @@ function clearField(input) {
 function createTask(
   title,
   description = "",
-  dueDate = getCurrentDate(),
-  priority = "low"
+  priority = "low",
+  dueDate = getCurrentDate()
 ) {
-  return { title, description, dueDate, priority };
+  return { title, description, priority, dueDate };
 }
 
 // Push task
@@ -94,12 +94,12 @@ function findCurrentIndex(project, title) {
 // Check if edited task title already exists
 
 // Get current project
-function getCurrentProject(buttons_arr, project) {
+function getCurrentProject(buttons_arr) {
   let current_project__title;
   buttons_arr.forEach((btn) => {
     if (btn.classList.contains("active")) {
       current_project__title = btn.innerText;
     }
   });
-  return project;
+  return current_project__title;
 }

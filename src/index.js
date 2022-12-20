@@ -27,7 +27,6 @@ let addBtn = document.querySelector("#add");
 let taskBar = document.querySelector("#item");
 let itemsList = document.querySelector(".items");
 const todo_section = document.querySelector(".todo");
-const customModal = document.querySelector(".custom-modal");
 const item__title = document.querySelector(".item__title");
 const item__input = document.querySelector(".item__input");
 let projects_list = document.querySelector(".projects__list");
@@ -37,16 +36,29 @@ let addProjectBtn = document.querySelector(".addProject");
 let current_project;
 let projects = [];
 
+// Modal elements
+const customModal = document.querySelector(".custom-modal");
+let task__title = document.querySelector(".task__title");
+let task__date = document.querySelector(".task__date");
+let task__description = document.querySelector(".task__description");
+
 // First/default project
 let defaultProject = createProject("Default Project");
 pushProject(projects, defaultProject);
 current_project = defaultProject;
 current_project__title.innerText = current_project.title;
-// console.log(getCurrentProject(projects_list__btns));
 
 // test task
-let myTask = createTask("test");
-let task2 = createTask("buy groceries");
+let myTask = createTask(
+  "test",
+  "this is a short description of my first task",
+  "medium"
+);
+let task2 = createTask(
+  "buy groceries",
+  "need to do groceries before xmas break",
+  "high"
+);
 pushTask(current_project, myTask);
 pushTask(current_project, task2);
 
@@ -94,6 +106,7 @@ itemsList.addEventListener("click", function (e) {
     current_project,
     currentItem__title.innerText
   );
+  let currentItemObj = current_project.tasks[currentItem__index];
 
   if (clickedBtn) {
     // Delete task
@@ -121,16 +134,20 @@ itemsList.addEventListener("click", function (e) {
     }
 
     // Task Settings
+    if (clickedBtn.classList.contains("settings")) {
+      let priority_input = document.querySelector(
+        "#" + currentItemObj.priority
+      );
+      customModal.setAttribute("data-item", currentItem__index);
+      customModal.classList.remove("d-none");
+      todo_section.classList.add("blur");
+      task__title.value = currentItemObj.title;
+      task__date.value = currentItemObj.dueDate;
+      task__description.value = currentItemObj.description;
+      priority_input.checked = true;
+    }
   }
 });
-
-// Populate the modal
-let task__title = document.querySelector(".task__title");
-let priority_checkbox = document.querySelector(".priority_checkbox");
-let task__priority = document.querySelector(".task__priority");
-let priority_input = document.querySelector(".priority_input");
-let task__date = document.querySelector(".task__date");
-let task__description = document.querySelector(".task__description");
 
 // Close the modal
 let closeModal = document.querySelector(".closeModal");

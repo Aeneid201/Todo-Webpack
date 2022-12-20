@@ -282,3 +282,14 @@ img {
   justify-content: space-between;
   align-items: center;
 }
+
+.priority_wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.priority_wrapper label {
+  margin-right: 10px;
+  margin-left: 5px;
+  color: #fff;
+}
