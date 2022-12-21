@@ -41,6 +41,8 @@ const customModal = document.querySelector(".custom-modal");
 let task__title = document.querySelector(".task__title");
 let task__date = document.querySelector(".task__date");
 let task__description = document.querySelector(".task__description");
+let task__priority = document.querySelectorAll('input[name="priority_input"]');
+const saveChangesButton = document.querySelector(".save_changes");
 
 // First/default project
 let defaultProject = createProject("Default Project");
@@ -149,6 +151,38 @@ itemsList.addEventListener("click", function (e) {
   }
 });
 
+// Save changes (task settings)
+saveChangesButton.addEventListener("click", function (e) {
+  e.preventDefault();
+  let currentItem__index = customModal.getAttribute("data-item");
+  let currentItem = current_project.tasks[currentItem__index];
+
+  // check title
+  if (task__title.value !== currentItem.title) {
+    currentItem.title = task__title.value;
+  }
+
+  // check description
+  if (task__description.value !== currentItem.description) {
+    currentItem.description = task__description.value;
+  }
+
+  // check date
+  if (task__date.value !== currentItem.dueDate) {
+    currentItem.dueDate = task__date.value;
+  }
+
+  // check priority
+  if (getCurrentTaskPriority() !== currentItem.priority) {
+    currentItem.priority = getCurrentTaskPriority();
+  }
+
+  // close the modal and render the changes
+  closeCustomModal();
+  clearAll(itemsList);
+  render();
+});
+
 // Close the modal
 let closeModal = document.querySelector(".closeModal");
 closeModal.addEventListener("click", closeCustomModal);
@@ -172,3 +206,15 @@ projects_list.addEventListener("click", function (e) {
   let clickedProject = e.target.closest("button");
   clickedProject.classList.add("active");
 });
+
+// Get current priority
+function getCurrentTaskPriority() {
+  let currentPriority;
+  for (let i = 0; i < task__priority.length; i++) {
+    if (task__priority[i].checked) {
+      currentPriority = task__priority[i].value;
+      break;
+    }
+  }
+  return currentPriority;
+}
