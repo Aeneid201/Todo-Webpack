@@ -10,6 +10,9 @@ export {
   getCurrentProject,
   pushProject,
   renderProject,
+  findProjectIndex,
+  isUniqueProject,
+  isUniqueTask,
 };
 // Current date
 function getCurrentDate() {
@@ -91,7 +94,23 @@ function findCurrentIndex(project, title) {
   return currentIndex;
 }
 
-// Check if edited task title already exists
+// Find index of project
+function findProjectIndex(projects, title) {
+  let project__index = projects.findIndex((project) => project.title == title);
+  return project__index;
+}
+
+// Check if project already exists
+function isUniqueProject(projects, title) {
+  let result = projects.some((project) => project.title == title);
+  return !result;
+}
+
+// Check if task already exists (within its project)
+function isUniqueTask(project, title) {
+  let result = project.tasks.some((task) => task.title == title);
+  return !result;
+}
 
 // Get current project
 function getCurrentProject(buttons_arr) {

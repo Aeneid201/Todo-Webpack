@@ -20,6 +20,9 @@ import {
   getCurrentProject,
   pushProject,
   renderProject,
+  findProjectIndex,
+  isUniqueProject,
+  isUniqueTask,
 } from "./functions.js";
 
 // DOM elements
@@ -27,10 +30,7 @@ let addBtn = document.querySelector("#add");
 let taskBar = document.querySelector("#item");
 let itemsList = document.querySelector(".items");
 const todo_section = document.querySelector(".todo");
-const item__title = document.querySelector(".item__title");
-const item__input = document.querySelector(".item__input");
 let projects_list = document.querySelector(".projects__list");
-let projects_list__btns = document.querySelectorAll(".projects__list button");
 let current_project__title = document.querySelector(".current-project__title");
 let addProjectBtn = document.querySelector(".addProject");
 let current_project;
@@ -46,7 +46,9 @@ const saveChangesButton = document.querySelector(".save_changes");
 
 // First/default project
 let defaultProject = createProject("Default Project");
+let testProject = createProject("Groceries list");
 pushProject(projects, defaultProject);
+pushProject(projects, testProject);
 current_project = defaultProject;
 current_project__title.innerText = current_project.title;
 
@@ -61,8 +63,10 @@ let task2 = createTask(
   "need to do groceries before xmas break",
   "high"
 );
+let testTask = createTask("Mango", "This is my first item to buy", "low");
 pushTask(current_project, myTask);
 pushTask(current_project, task2);
+pushTask(testProject, testTask);
 
 // Display the tasks
 function render() {
@@ -86,14 +90,13 @@ addBtn.addEventListener("click", function (e) {
   e.preventDefault();
 
   // validate input
-  if (taskBar.value) {
+  if (taskBar.value && isUniqueTask(current_project, taskBar.value)) {
     pushTask(current_project, createTask(taskBar.value));
-    console.log(current_project);
     clearField(taskBar);
     clearAll(itemsList);
     render();
   } else {
-    alert("Please enter a task");
+    alert("This task already exists within your project");
   }
 });
 
@@ -158,8 +161,13 @@ saveChangesButton.addEventListener("click", function (e) {
   let currentItem = current_project.tasks[currentItem__index];
 
   // check title
-  if (task__title.value !== currentItem.title) {
+  if (
+    task__title.value !== currentItem.title &&
+    isUniqueTask(current_project, task__title.value)
+  ) {
     currentItem.title = task__title.value;
+  } else {
+    alert("This task already exists within your project!");
   }
 
   // check description
@@ -194,17 +202,14 @@ function closeCustomModal() {
 // Add project functionality
 addProjectBtn.addEventListener("click", function () {
   let projectTitle = prompt("Enter your project title");
-  if (projectTitle) {
+  if (projectTitle && isUniqueProject(projects, projectTitle)) {
     let newProject = createProject(projectTitle);
     pushProject(projects, newProject);
     clearAll(projects_list);
     renderAllProjects();
+  } else {
+    alert("This project already exists!");
   }
-});
-
-projects_list.addEventListener("click", function (e) {
-  let clickedProject = e.target.closest("button");
-  clickedProject.classList.add("active");
 });
 
 // Get current priority
@@ -218,3 +223,15 @@ function getCurrentTaskPriority() {
   }
   return currentPriority;
 }
+
+// Get current project
+projects_list.addEventListener("click", function (e) {
+  let clickedProject__button = e.target.closest("button");
+  clickedProject__button.classList.add("active");
+  let clickedProject__title = clickedProject__button.innerText;
+  let clickedProject =
+    projects[findProjectIndex(projects, clickedProject__title)];
+  current_project = clickedProject;
+  clearAll(itemsList);
+  render();
+});
