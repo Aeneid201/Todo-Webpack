@@ -1,13 +1,18 @@
 {
   "name": "todo-webpack",
   "version": "1.0.0",
+  "repository": {
+    "url": "git+https://github.com/Aeneid201/Todo-Webpack.git"
+  },
   "description": "Simple todo list using Webpack",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
     "start": "webpack serve --open",
-    "build": "webpack"
+    "build": "webpack",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "author": "Oumaima Lairani",
   "license": "ISC",
@@ -19,6 +24,7 @@
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.2",
     "font-awesome": "^4.7.0",
+    "gh-pages": "^4.0.0",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.1",
