@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  <script defer src="/runtime.bundle.js"></script><script defer src="/main.bundle.js"></script></head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 col-sm-6">
+            <div class="logo">
+              <img src="/images/3c5533e9c49d921eaa89.png" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="todo">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-4 col-sm-4 flush col-xs-12">
+            <div class="side-menu">
+              <div class="project__header">
+                <h1>Projects</h1>
+
+                <button class="addProject">
+                  <img src="/images/446f38d5690dc35914fe.png" />
+                </button>
+              </div>
+              <div class="projects__list"></div>
+            </div>
+          </div>
+          <div class="col-lg-8 col-sm-8 col-xs-12">
+            <div class="inner">
+              <form>
+                <div class="form-control-wrapper">
+                  <input
+                    placeholder="Enter a new task"
+                    type="text"
+                    class="form-control"
+                    id="item"
+                    name="item"
+                    autocomplete="off"
+                    required
+                  />
+                  <button type="submit" id="add" class="default-btn plus-btn">
+                    +
+                  </button>
+                </div>
+              </form>
+
+              <div class="items">
+                <h1 class="current-project__title"></h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- modal -->
+    <div class="custom-modal d-none">
+      <div class="modal-title">
+        <h3>Edit Task</h3>
+        <button class="closeModal" type="button">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Task:
+          <input
+            type="text"
+            class="task__title"
+            placeholder="Enter your task title"
+          />
+        </p>
+        <p>
+          Description:
+          <textarea
+            class="task__description"
+            placeholder="Enter your description for this task..."
+          ></textarea>
+        </p>
+        <p>Due Date: <input type="date" class="task__date" /></p>
+
+        <div class="priority_wrapper">
+          <input type="radio" id="low" name="priority_input" value="low" />
+          <label for="low">Low</label><br />
+          <input
+            type="radio"
+            id="medium"
+            name="priority_input"
+            value="medium"
+          />
+          <label for="medium">Medium</label><br />
+          <input type="radio" id="high" name="priority_input" value="high" />
+          <label for="high">High</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary save_changes">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
