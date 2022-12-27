@@ -23,6 +23,7 @@ import {
   findProjectIndex,
   isUniqueProject,
   isUniqueTask,
+  isDuplicated,
 } from "./functions.js";
 
 // DOM elements
@@ -117,8 +118,7 @@ itemsList.addEventListener("click", function (e) {
     // Delete task
     if (clickedBtn.classList.contains("delete")) {
       current_project.tasks.splice(currentItem__index, 1);
-      clearAll(itemsList);
-      render();
+      currentItem.remove();
     }
 
     // Edit task
@@ -166,8 +166,11 @@ saveChangesButton.addEventListener("click", function (e) {
     isUniqueTask(current_project, task__title.value)
   ) {
     currentItem.title = task__title.value;
-  } else {
-    alert("This task already exists within your project!");
+  } else if (
+    task__title.value !== currentItem.title &&
+    !isUniqueTask(current_project, task__title.value)
+  ) {
+    alert("This task already exists within your project");
   }
 
   // check description
