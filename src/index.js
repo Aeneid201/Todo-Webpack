@@ -230,7 +230,7 @@ function getCurrentTaskPriority() {
 // Get current project
 projects_list.addEventListener("click", function (e) {
   let clickedProject__button = e.target.closest("button");
-  clickedProject__button.classList.add("active");
+
   let clickedProject__title = clickedProject__button.innerText;
   let clickedProject =
     projects[findProjectIndex(projects, clickedProject__title)];
@@ -238,3 +238,17 @@ projects_list.addEventListener("click", function (e) {
   clearAll(itemsList);
   render();
 });
+
+let projects_list__buttons = document.querySelectorAll(
+  ".projects__list button"
+);
+
+for (let i = 0; i < projects_list__buttons.length; i++) {
+  projects_list__buttons[i].addEventListener("click", function () {
+    // remove active class from other buttons
+    document.querySelector(".active")
+      ? document.querySelector(".active").classList.remove("active")
+      : "";
+    this.classList.add("active");
+  });
+}
