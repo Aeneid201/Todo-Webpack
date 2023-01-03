@@ -102,7 +102,9 @@ function findProjectIndex(projects, title) {
 
 // Check if project already exists
 function isUniqueProject(projects, title) {
-  let result = projects.some((project) => project.title == title);
+  let result = projects.some(
+    (project) => project.title.toLowerCase() == title.toLowerCase()
+  );
   return !result;
 }
 

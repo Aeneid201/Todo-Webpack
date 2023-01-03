@@ -47,9 +47,7 @@ const saveChangesButton = document.querySelector(".save_changes");
 
 // First/default project
 let defaultProject = createProject("Default Project");
-let testProject = createProject("Groceries list");
 pushProject(projects, defaultProject);
-pushProject(projects, testProject);
 current_project = defaultProject;
 current_project__title.innerText = current_project.title;
 
@@ -64,10 +62,8 @@ let task2 = createTask(
   "need to do groceries before xmas break",
   "high"
 );
-let testTask = createTask("Mango", "This is my first item to buy", "low");
 pushTask(current_project, myTask);
 pushTask(current_project, task2);
-pushTask(testProject, testTask);
 
 // Display the tasks
 function render() {
@@ -251,4 +247,13 @@ for (let i = 0; i < projects_list__buttons.length; i++) {
       : "";
     this.classList.add("active");
   });
+}
+
+// add projects to Local Storage
+function pushToStorage(data) {
+  let newProjects = [];
+  newProjects = JSON.parse(localStorage.getItem("projects")) || [];
+  newProjects.push(data);
+  localStorage.setItem("projects", JSON.stringify(newProjects));
+  console.log(JSON.parse(localStorage.getItem("projects")));
 }
