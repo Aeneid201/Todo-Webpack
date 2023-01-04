@@ -84,7 +84,10 @@ function renderTask(list, task) {
 }
 
 function renderProject(list, project) {
-  let html = `<button class="project__btn">${project.title}</button>`;
+  let html = `<div class="project__wrapper">
+  <button class="project__btn">${project.title}</button>
+  <span class="deleteProject">&times;</span>
+  </div>`;
   return list.insertAdjacentHTML("beforeend", html);
 }
 

@@ -205,6 +205,7 @@ addProjectBtn.addEventListener("click", function () {
     pushProject(projects, newProject);
     clearAll(projects_list);
     renderAllProjects();
+    pushToStorage();
   } else {
     alert("This project already exists!");
   }
@@ -224,7 +225,10 @@ function getCurrentTaskPriority() {
 
 // Get current project
 projects_list.addEventListener("click", function (e) {
-  let clickedProject__button = e.target.closest("button");
+  let clickedProject__wrapper = e.target.closest(".project__wrapper");
+  let clickedProject__button =
+    clickedProject__wrapper.querySelector(".project__btn");
+  let clickedProject__span = e.target.closest(".deleteProject");
 
   // remove active class from other buttons
   document.querySelector(".active")
@@ -232,25 +236,28 @@ projects_list.addEventListener("click", function (e) {
     : "";
 
   // add active class to clicked project
-  clickedProject__button.classList.add("active");
+  clickedProject__wrapper.classList.add("active");
 
   let clickedProject__title = clickedProject__button.innerText;
   let clickedProject =
     projects[findProjectIndex(projects, clickedProject__title)];
   current_project = clickedProject;
+
+  // delete project
+  if (clickedProject__span) {
+    let userResponse = confirm("Are you sure you want to delete this project?");
+    if (userResponse) {
+      let projectToDelete = findProjectIndex(projects, clickedProject__title);
+      projects.splice(projectToDelete, 1);
+      clickedProject__wrapper.remove();
+    }
+  }
+
   clearAll(itemsList);
   render();
 });
 
-let projects_list__buttons = document.querySelectorAll(
-  ".projects__list button"
-);
-
 // add projects to Local Storage
-function pushToStorage(data) {
-  let newProjects = [];
-  newProjects = JSON.parse(localStorage.getItem("projects")) || [];
-  newProjects.push(data);
-  localStorage.setItem("projects", JSON.stringify(newProjects));
-  console.log(JSON.parse(localStorage.getItem("projects")));
+function pushToStorage() {
+  localStorage.setItem("projects", JSON.stringify(projects));
 }

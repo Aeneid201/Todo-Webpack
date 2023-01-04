@@ -241,7 +241,7 @@ img {
   padding: 0 !important;
 }
 
-.projects__list .project__btn {
+.projects__list .project__wrapper {
   background: darkgrey;
   color: #fff;
   border: none;
@@ -251,9 +251,30 @@ img {
   border-radius: 5px;
   outline: none;
   margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.projects__list .project__btn.active {
+.projects__list .project__wrapper button {
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 0;
+}
+
+.projects__list .project__wrapper span {
+  cursor: pointer;
+  transition: 0.4s all ease;
+  font-size: 25px;
+}
+
+.projects__list .project__wrapper span:hover,
+.projects__list .project__wrapper span:focus {
+  color: #000;
+}
+
+.projects__list .project__wrapper.active {
   background: #be92a2;
 }
 
