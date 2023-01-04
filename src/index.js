@@ -36,7 +36,6 @@ let current_project__title = document.querySelector(".current-project__title");
 let addProjectBtn = document.querySelector(".addProject");
 let current_project;
 let projects = [];
-
 // Modal elements
 const customModal = document.querySelector(".custom-modal");
 let task__title = document.querySelector(".task__title");
@@ -51,7 +50,7 @@ pushProject(projects, defaultProject);
 current_project = defaultProject;
 current_project__title.innerText = current_project.title;
 
-// test task
+// test tasks
 let myTask = createTask(
   "test",
   "this is a short description of my first task",
@@ -227,6 +226,14 @@ function getCurrentTaskPriority() {
 projects_list.addEventListener("click", function (e) {
   let clickedProject__button = e.target.closest("button");
 
+  // remove active class from other buttons
+  document.querySelector(".active")
+    ? document.querySelector(".active").classList.remove("active")
+    : "";
+
+  // add active class to clicked project
+  clickedProject__button.classList.add("active");
+
   let clickedProject__title = clickedProject__button.innerText;
   let clickedProject =
     projects[findProjectIndex(projects, clickedProject__title)];
@@ -238,16 +245,6 @@ projects_list.addEventListener("click", function (e) {
 let projects_list__buttons = document.querySelectorAll(
   ".projects__list button"
 );
-
-for (let i = 0; i < projects_list__buttons.length; i++) {
-  projects_list__buttons[i].addEventListener("click", function () {
-    // remove active class from other buttons
-    document.querySelector(".active")
-      ? document.querySelector(".active").classList.remove("active")
-      : "";
-    this.classList.add("active");
-  });
-}
 
 // add projects to Local Storage
 function pushToStorage(data) {
